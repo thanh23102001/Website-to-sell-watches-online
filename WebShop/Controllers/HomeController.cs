@@ -10,7 +10,7 @@ namespace WebShop.Controllers
     {
         public IActionResult HomePage()
         {
-            using(var context = new WebShopContext())
+            using (var context = new WebShopContext())
             {
                 List<Product> list = context.Products.ToList();
                 ViewBag.list = list;
@@ -23,7 +23,7 @@ namespace WebShop.Controllers
         }
 
         public IActionResult FormLogin()
-        {    
+        {
             return View();
         }
         [HttpPost]
@@ -34,7 +34,7 @@ namespace WebShop.Controllers
             using (var context = new WebShopContext())
             {
                 Account a = context.Accounts.Where(x => x.Password == pass && x.Username == user).SingleOrDefault();
-                if(a != null)
+                if (a != null)
                 {
                     HttpContext.Session.SetString("id", a.Id.ToString());
                     HttpContext.Session.SetString("role", a.Role.ToString());
@@ -45,7 +45,13 @@ namespace WebShop.Controllers
                     return Redirect("/Home/FormLogin");
                 }
             }
-                return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("/Home/FormLogin");
+
         }
     }
 }
