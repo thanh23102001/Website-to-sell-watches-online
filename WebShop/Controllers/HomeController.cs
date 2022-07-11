@@ -23,9 +23,29 @@ namespace WebShop.Controllers
         }
 
         public IActionResult FormLogin()
-        {
-            
+        {    
             return View();
+        }
+        [HttpPost]
+        public IActionResult Login()
+        {
+            string user = HttpContext.Request.Form["user"];
+            string pass = HttpContext.Request.Form["pass"];
+            using (var context = new WebShopContext())
+            {
+                Account a = context.Accounts.Where(x => x.Password == pass && x.Username == user).SingleOrDefault();
+                if(a != null)
+                {
+                    HttpContext.Session.SetString("id", a.Id.ToString());
+                    HttpContext.Session.SetString("role", a.Role.ToString());
+                    return Redirect("/Home/HomePage");
+                }
+                else
+                {
+                    return Redirect("/Home/FormLogin");
+                }
+            }
+                return View();
         }
     }
 }
