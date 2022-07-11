@@ -53,5 +53,11 @@ namespace WebShop.Controllers
             return Redirect("/Home/FormLogin");
 
         }
+
+        public IActionResult Register()
+        {
+
+            return View();
+        }
     }
 }

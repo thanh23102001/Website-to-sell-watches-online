@@ -15,7 +15,7 @@
     <body>
     @if (ViewBag.id == null)
     {
-        <a href="">Login</a>
+        <a href="/Home/FormLogin">Login</a>
     }
     else
     {
@@ -39,7 +39,7 @@
             <div class="card-body">
               <h5 class="card-title">@item.ProductName</h5>
               <p class="card-text">Gia tien: @item.Price - So luong: @item.Number</p>
-              <a href="#" class="btn btn-primary">Add cart</a>
+              <a href="/Home/AddToCart" class="btn btn-primary">Add cart</a>
             </div>
             </div>
            }
