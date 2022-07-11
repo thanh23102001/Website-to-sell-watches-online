@@ -13,10 +13,21 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
     </head>
     <body>
-    <a href="">Manage product</a>
-    <a href="">View cart</a>
-    <a href="">Login</a>
-    <a href="">Logout</a>
+    @if (ViewBag.id == null)
+    {
+        <a href="">Login</a>
+    }
+    else
+    {
+        if(ViewBag.role == "1")
+        {
+            <a href="">Manage product</a>
+        }
+        else{
+                    <a href="">Manage product</a>          
+        }
+            <a href="">Logout</a>
+    }
 
 
 

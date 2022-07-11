@@ -21,5 +21,11 @@ namespace WebShop.Controllers
             ViewBag.role = role;
             return View();
         }
+
+        public IActionResult FormLogin()
+        {
+            
+            return View();
+        }
     }
 }
