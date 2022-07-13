@@ -55,9 +55,14 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register()
+        public IActionResult Register(int type)
         {
             Account account = new Account();
+            string message = string.Empty;
+            if (type == 1)
+            {
+                message = "Sign Up Success!";
+            }
             using (var context = new WebShopContext())
             {
                 account.Role = 2;
@@ -67,7 +72,30 @@ namespace WebShop.Controllers
                 context.Accounts.Add(account);
                 context.SaveChanges();
             }
-            return Redirect("/Home/FormLogin"); ;
+            SetAlert(message, type);
+            return Redirect("/Home/FormLogin");
+        }
+
+        protected void SetAlert(string message, int type)
+        {
+            TempData["AlertMessage"] = message;
+            if (type == 1)
+            {
+                TempData["AlertType"] = "alert-success";
+            }
+            else if (type == 2)
+            {
+                TempData["AlertType"] = "alert-warning";
+            }
+            else if (type == 3)
+            {
+                TempData["AlertType"] = "alert-danger";
+            }
+            else
+            {
+                TempData["AlertType"] = "alert-info";
+            }
         }
     }
 }
+
