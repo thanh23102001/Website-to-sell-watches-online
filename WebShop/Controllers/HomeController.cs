@@ -3,6 +3,7 @@ using WebShop.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace WebShop.Controllers
 {
@@ -17,8 +18,14 @@ namespace WebShop.Controllers
             }
             string id = HttpContext.Session.GetString("id");
             string role = HttpContext.Session.GetString("role");
+            string sum = HttpContext.Session.GetString("slsp");
+            if (sum == null)
+            {
+                sum = "0";
+            }
             ViewBag.id = id;
             ViewBag.role = role;
+            ViewBag.slsp = sum;
             return View();
         }
 
@@ -95,6 +102,25 @@ namespace WebShop.Controllers
             {
                 TempData["AlertType"] = "alert-info";
             }
+        }
+
+      
+        public IActionResult AddToCart(int id)
+        {
+            //sp1 co sl1
+            //sp2 co sl2
+            IDictionary<int, int> cart = new Dictionary<int, int>();
+            cart.Add(id, 1);
+            int sum = 0;
+            foreach (KeyValuePair<int, int> item in cart)
+            {
+                sum += item.Value;
+            }
+            HttpContext.Session.SetString("slsp", sum.ToString());
+            //chuyen cart ve string luu trong session
+            string jsonData = JsonSerializer.Serialize(cart);
+            HttpContext.Session.SetString("cart", jsonData);
+            return Redirect("/Home/HomePage");
         }
     }
 }

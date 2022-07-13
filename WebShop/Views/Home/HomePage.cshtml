@@ -24,7 +24,7 @@
             <a href="">Manage product</a>
         }
         else{
-                    <a href="">View cart</a>          
+                    <a href="">View cart(@ViewBag.slsp)</a>          
         }
             <a href="/Home/Logout">Logout</a>
     }
@@ -39,7 +39,7 @@
             <div class="card-body">
               <h5 class="card-title">@item.ProductName</h5>
               <p class="card-text">Gia tien: @item.Price - So luong: @item.Number</p>
-              <a href="/Home/AddToCart" class="btn btn-primary">Add cart</a>
+              <a href="/Home/AddToCart?id=@item.Id" class="btn btn-primary">Add cart</a>
             </div>
             </div>
            }
