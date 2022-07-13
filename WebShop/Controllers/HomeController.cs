@@ -54,10 +54,20 @@ namespace WebShop.Controllers
 
         }
 
+        [HttpPost]
         public IActionResult Register()
         {
-
-            return View();
+            Account account = new Account();
+            using (var context = new WebShopContext())
+            {
+                account.Role = 2;
+                account.Username = HttpContext.Request.Form["user"];
+                account.Password = HttpContext.Request.Form["pass"];
+                account.Email = HttpContext.Request.Form["email"];
+                context.Accounts.Add(account);
+                context.SaveChanges();
+            }
+            return Redirect("/Home/FormLogin"); ;
         }
     }
 }
