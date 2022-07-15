@@ -104,13 +104,29 @@ namespace WebShop.Controllers
             }
         }
 
-      
+
         public IActionResult AddToCart(int id)
         {
             //sp1 co sl1
             //sp2 co sl2
+            string cart1 = HttpContext.Session.GetString("cart");
             IDictionary<int, int> cart = new Dictionary<int, int>();
-            cart.Add(id, 1);
+            if (cart1 != null)
+            {
+                cart = JsonSerializer.Deserialize<IDictionary<int, int>>(cart1);
+                if (cart.ContainsKey(id))
+                {
+                    cart[id] += 1;
+                }
+                else
+                {
+                    cart.Add(id, 1);
+                }
+            }
+            else
+            {
+                cart.Add(id, 1);
+            }
             int sum = 0;
             foreach (KeyValuePair<int, int> item in cart)
             {
@@ -121,6 +137,11 @@ namespace WebShop.Controllers
             string jsonData = JsonSerializer.Serialize(cart);
             HttpContext.Session.SetString("cart", jsonData);
             return Redirect("/Home/HomePage");
+        }
+
+        public IActionResult ViewCart()
+        {
+            return View();
         }
     }
 }
