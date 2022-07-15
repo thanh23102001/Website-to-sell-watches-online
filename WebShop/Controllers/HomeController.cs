@@ -141,6 +141,19 @@ namespace WebShop.Controllers
 
         public IActionResult ViewCart()
         {
+            string json = HttpContext.Session.GetString("cart");
+            IDictionary<int, int> cart = JsonSerializer.Deserialize<IDictionary<int, int>>(json);
+            int? sum = 0;
+            foreach (KeyValuePair<int,int> item in cart)
+            {
+                using(var context = new WebShopContext())
+                {
+                  Product product = context.Products.Where(x => x.Id == item.Key).SingleOrDefault();
+                    sum += product.Price * item.Value;
+                }
+            }
+            ViewBag.sum = sum;
+            ViewBag.cart = cart;
             return View();
         }
     }
