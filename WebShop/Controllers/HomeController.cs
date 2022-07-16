@@ -271,5 +271,12 @@ namespace WebShop.Controllers
             HttpContext.Session.SetString("slsp",sum1.ToString());
             return RedirectToAction("HomePage");
         }
+        public IActionResult ManageProduct()
+        {
+            using var context = new WebShopContext();
+            List<Product> list = context.Products.ToList();
+            ViewBag.list = list;
+            return View();
+        }
     }
 }
