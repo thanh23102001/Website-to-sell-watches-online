@@ -211,7 +211,7 @@ namespace WebShop.Controllers
             return Redirect("/Home/ViewCart");
         }
 
-        [HttpPost]
+        
         public IActionResult ThanhToan(int sum)
         {
             string note = HttpContext.Request.Form["note"];

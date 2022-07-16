@@ -64,7 +64,11 @@
 
             <div class="right">
                 <h1 class="total">Total: <span>@ViewBag.sum</span>€</h1>
-                <a href="/Home/ThanhToan?sum=@ViewBag.sum" class="btn">Checkout</a>
+                   <form action="/Home/ThanhToan?sum=@ViewBag.sum" method="post">
+            <textarea id="w3review" name="note" rows="4" cols="50"></textarea>
+            <button type="submit">Mua Hang</button>
+        </form>
+                 
             </div>
 
         </div>
