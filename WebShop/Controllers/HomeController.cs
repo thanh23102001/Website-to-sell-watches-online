@@ -144,11 +144,11 @@ namespace WebShop.Controllers
             string json = HttpContext.Session.GetString("cart");
             IDictionary<int, int> cart = JsonSerializer.Deserialize<IDictionary<int, int>>(json);
             int? sum = 0;
-            foreach (KeyValuePair<int,int> item in cart)
+            foreach (KeyValuePair<int, int> item in cart)
             {
-                using(var context = new WebShopContext())
+                using (var context = new WebShopContext())
                 {
-                  Product product = context.Products.Where(x => x.Id == item.Key).SingleOrDefault();
+                    Product product = context.Products.Where(x => x.Id == item.Key).SingleOrDefault();
                     sum += product.Price * item.Value;
                 }
             }
@@ -156,6 +156,96 @@ namespace WebShop.Controllers
             ViewBag.cart = cart;
             return View();
         }
+
+        public IActionResult AddSP(int id)
+        {
+            string cart1 = HttpContext.Session.GetString("cart");
+            IDictionary<int, int> cart = new Dictionary<int, int>();
+            if (cart1 != null)
+            {
+                cart = JsonSerializer.Deserialize<IDictionary<int, int>>(cart1);
+                if (cart.ContainsKey(id))
+                {
+                    cart[id] += 1;
+                }
+            }
+            int sum = 0;
+            foreach (KeyValuePair<int, int> item in cart)
+            {
+                sum += item.Value;
+            }
+            HttpContext.Session.SetString("slsp", sum.ToString());
+            //chuyen cart ve string luu trong session
+            string jsonData = JsonSerializer.Serialize(cart);
+            HttpContext.Session.SetString("cart", jsonData);
+            return Redirect("/Home/ViewCart");
+        }
+        public IActionResult XoaSP(int id)
+        {
+            string cart1 = HttpContext.Session.GetString("cart");
+            IDictionary<int, int> cart = new Dictionary<int, int>();
+            if (cart1 != null)
+            {
+                cart = JsonSerializer.Deserialize<IDictionary<int, int>>(cart1);
+                if (cart.ContainsKey(id))
+                {
+                    if (cart[id] == 1)
+                    {
+                        cart.Remove(id);
+                    }
+                    else
+                    {
+                        cart[id] -= 1;
+                    }
+                }
+            }
+            int sum = 0;
+            foreach (KeyValuePair<int, int> item in cart)
+            {
+                sum += item.Value;
+            }
+            HttpContext.Session.SetString("slsp", sum.ToString());
+            //chuyen cart ve string luu trong session
+            string jsonData = JsonSerializer.Serialize(cart);
+            HttpContext.Session.SetString("cart", jsonData);
+            return Redirect("/Home/ViewCart");
+        }
+
+        [HttpPost]
+        public IActionResult ThanhToan(int sum)
+        {
+            string note = HttpContext.Request.Form["note"];
+            string addres = HttpContext.Request.Form["address"];
+            string phone = HttpContext.Request.Form["phone"];
+            string id = HttpContext.Session.GetString("id");
+            using var context = new WebShopContext();
+            List<Order> list = context.Orders.ToList();
+            int count = list.Count + 1;
+            Order order = new Order();
+            order.Purchases = count;
+            order.Customer = int.Parse(id);
+            order.TotalPrice = sum;
+            order.Note = note;
+            order.Address = addres;
+            context.Orders.Add(order);
+            context.SaveChanges();
+            string cart1 = HttpContext.Session.GetString("cart");
+            IDictionary<int,int> cart = new Dictionary<int, int>();
+            cart = JsonSerializer.Deserialize<Dictionary<int,int>>(cart1);
+            Order order1 = context.Orders.Where(o => o.Purchases == count).SingleOrDefault();
+            foreach(KeyValuePair<int,int> item in cart)
+            {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.Idorder = order1.Id;
+                orderDetail.Product = item.Key;
+                orderDetail.Number = item.Value;
+                context.OrderDetails.Add(orderDetail);
+                context.SaveChanges();
+            }
+            cart = new Dictionary<int, int>();
+            string jsonData = JsonSerializer.Serialize(cart);
+            HttpContext.Session.SetString("cart", jsonData);
+            return RedirectToAction("HomePage");
+        }
     }
 }
-

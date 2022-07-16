@@ -26,8 +26,6 @@
                 {
                     product = context.Products.Where(x => x.Id == item.Key).FirstOrDefault();
                 }
-                decimal tong = product.Price * Convert.ToDecimal(item.Value);
-                sum += tong;
                 <article class="product">
                     <header>
                         <a class="remove" href="/Product/XoaHetSP?id1=@product.Id">
@@ -35,7 +33,6 @@
                             <h3>Remove product</h3>
                         </a>
                     </header>
-
                     <div class="content">
 
                         <h1>@product.ProductName</h1>
@@ -44,16 +41,16 @@
                     </div>
 
                     <footer class="content">
-                        <a href="/Product/XoaSP?id1=@product.Id"><span class="qt-minus">-</span></a>
+                        <a href="/Home/XoaSP?id=@product.Id"><span class="qt-minus">-</span></a>
                         <span class="qt">@item.Value</span>
-                        <a href="/Product/AddSP?id1=@product.Id"><span class="qt-plus">+</span></a>
+                        <a href="/Home/AddSP?id=@product.Id"><span class="qt-plus">+</span></a>
 
                         <h2 class="full-price">
-                            @tong€
+                           @product.Price€
                         </h2>
 
                         <h2 class="price">
-                            @product.Price€
+                          
                         </h2>
                     </footer>
                 </article>
@@ -66,8 +63,8 @@
         <div class="container clearfix">
 
             <div class="right">
-                <h1 class="total">Total: <span>@sum</span>€</h1>
-                <a href="/Product/ThanhToan?sum=@sum" class="btn">Checkout</a>
+                <h1 class="total">Total: <span>@ViewBag.sum</span>€</h1>
+                <a href="/Home/ThanhToan?sum=@ViewBag.sum" class="btn">Checkout</a>
             </div>
 
         </div>
