@@ -61,7 +61,7 @@ namespace WebShop.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Address).HasMaxLength(1);
+                entity.Property(e => e.Address).HasMaxLength(50);
 
                 entity.HasOne(d => d.CustomerNavigation)
                     .WithMany(p => p.Orders)

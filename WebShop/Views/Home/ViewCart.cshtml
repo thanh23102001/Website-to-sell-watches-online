@@ -1,5 +1,4 @@
-﻿
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -16,6 +15,12 @@
         <a href="/Product/List"><h1>Back to shop</h1></a>
     </div>
 </header>
+@if (@ViewBag.number == null)
+{
+    <div>Cart is empty</div>
+}
+else
+{
     <div class="container">
 
         <section id="cart">
@@ -46,11 +51,10 @@
                         <a href="/Home/AddSP?id=@product.Id"><span class="qt-plus">+</span></a>
 
                         <h2 class="full-price">
-                           @product.Price€
+                            @product.Price€
                         </h2>
 
                         <h2 class="price">
-                          
                         </h2>
                     </footer>
                 </article>
@@ -64,17 +68,13 @@
 
             <div class="right">
                 <h1 class="total">Total: <span>@ViewBag.sum</span>€</h1>
-                   <form action="/Home/ThanhToan?sum=@ViewBag.sum" method="post">
-            <textarea id="w3review" name="note" rows="4" cols="50"></textarea>
-            <button type="submit">Mua Hang</button>
-        </form>
-                 
+                <a href="/Home/Order?sum=@ViewBag.sum" class="btn">Checkout</a>
             </div>
 
         </div>
 
     </footer>
-
+}
 <style>
     body {
         background: #eee;

@@ -142,18 +142,27 @@ namespace WebShop.Controllers
         public IActionResult ViewCart()
         {
             string json = HttpContext.Session.GetString("cart");
-            IDictionary<int, int> cart = JsonSerializer.Deserialize<IDictionary<int, int>>(json);
+            IDictionary<int, int> cart; //= JsonSerializer.Deserialize<IDictionary<int, int>>(json);
             int? sum = 0;
-            foreach (KeyValuePair<int, int> item in cart)
+            if (json == null)
             {
-                using (var context = new WebShopContext())
-                {
-                    Product product = context.Products.Where(x => x.Id == item.Key).SingleOrDefault();
-                    sum += product.Price * item.Value;
-                }
+                ViewBag.number = null;
             }
-            ViewBag.sum = sum;
-            ViewBag.cart = cart;
+            else
+            {
+                cart = JsonSerializer.Deserialize<IDictionary<int, int>>(json);
+                foreach (KeyValuePair<int, int> item in cart)
+                {
+                    using (var context = new WebShopContext())
+                    {
+                        Product product = context.Products.Where(x => x.Id == item.Key).SingleOrDefault();
+                        sum += product.Price * item.Value;
+                    }
+                }
+                ViewBag.sum = sum;
+                ViewBag.cart = cart;
+                ViewBag.number = 1;
+            }
             return View();
         }
 
@@ -210,13 +219,20 @@ namespace WebShop.Controllers
             HttpContext.Session.SetString("cart", jsonData);
             return Redirect("/Home/ViewCart");
         }
+        public IActionResult Order(string sum)
+        {
+            ViewBag.sum = sum;
+            return View();
+        }
 
-        
-        public IActionResult ThanhToan(int sum)
+
+
+            public IActionResult ThanhToan(int sum)
         {
             string note = HttpContext.Request.Form["note"];
-            string addres = HttpContext.Request.Form["address"];
+            string address = HttpContext.Request.Form["address"];
             string phone = HttpContext.Request.Form["phone"];
+            string name = HttpContext.Request.Form["name"];
             string id = HttpContext.Session.GetString("id");
             using var context = new WebShopContext();
             List<Order> list = context.Orders.ToList();
@@ -226,7 +242,9 @@ namespace WebShop.Controllers
             order.Customer = int.Parse(id);
             order.TotalPrice = sum;
             order.Note = note;
-            order.Address = addres;
+            order.Address = address;
+            order.Phone = phone;
+            order.Name = name;
             context.Orders.Add(order);
             context.SaveChanges();
             string cart1 = HttpContext.Session.GetString("cart");
@@ -245,6 +263,12 @@ namespace WebShop.Controllers
             cart = new Dictionary<int, int>();
             string jsonData = JsonSerializer.Serialize(cart);
             HttpContext.Session.SetString("cart", jsonData);
+            int sum1 = 0;
+            foreach (KeyValuePair<int, int> item in cart)
+            {
+                sum1 +=item.Value;
+            }
+            HttpContext.Session.SetString("slsp",sum1.ToString());
             return RedirectToAction("HomePage");
         }
     }
