@@ -341,5 +341,19 @@ namespace WebShop.Controllers
             context.SaveChanges();
             return Redirect("ManageProduct");
         }
+
+        public IActionResult ManageOrder(int id)
+        {
+            using (var context = new WebShopContext())
+            {
+                List<Order> list = context.Orders.ToList();
+                foreach(Order item in list)
+                {
+                    item.CustomerNavigation = context.Accounts.Where(x => x.Id == item.Customer).Single();
+                }
+                ViewBag.list = list;
+            }
+            return View();
+        }
     }
 }
