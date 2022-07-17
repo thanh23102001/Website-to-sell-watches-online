@@ -13,7 +13,7 @@ namespace WebShop.Controllers
         {
             using (var context = new WebShopContext())
             {
-                List<Product> list = context.Products.ToList();
+                List<Product> list = context.Products.Where(x => x.Status == true).ToList();
                 ViewBag.list = list;
             }
             string id = HttpContext.Session.GetString("id");
@@ -277,6 +277,23 @@ namespace WebShop.Controllers
             List<Product> list = context.Products.ToList();
             ViewBag.list = list;
             return View();
+        }
+
+        public IActionResult AnHien(int id, int type)
+        {
+            using var context = new WebShopContext();
+            Product product = context.Products.Where(x=>x.Id == id).SingleOrDefault();
+            if (type == 0)
+            {
+                product.Status = false;
+            }
+            else
+            {
+                product.Status = true;
+            }
+            context.Products.Update(product);
+            context.SaveChanges();
+            return Redirect("ManageProduct");
         }
     }
 }

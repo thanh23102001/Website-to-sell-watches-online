@@ -4,163 +4,128 @@
 @{
 }
 @using WebShop.Models;
+<!DOCTYPE html>
 <html>
-<h1><span class="blue">&lt;</span>Table<span class="blue">&gt;</span> <span class="yellow">Responsive</pan></h1>
-<h2>Created with love by <a href="https://github.com/pablorgarcia" target="_blank">Pablo García</a></h2>
+<head>
+    <title>Light Javascript Table Filter</title>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <section class="container">
 
-<table class="container">
-    <thead>
-        <tr>
-            <th><h1>ID</h1></th>
-            <th><h1>Name</h1></th>
-            <th><h1>URL Image</h1></th>
-            <th><h1>Price</h1></th>
-            <th><h1>Status</h1></th>
-            <th><h1></h1></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Product item in ViewBag.list)
-        {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.ProductName</td>
-                <td>@item.Image</td>
-                <td>@item.Price</td>
-                @if (item.Status == true)
-                {
-                    <td>Dang duoc ban</td>
-                    <td><a>An</a></td>
-                }
-                else
-                {
-                    <td>Sold out</td>
-                    <td><a>Hien</a></td>
-                }
+        <h2>Light Javascript Table Filter</h2>
 
-            </tr>
-        }
-    </tbody>
-</table>
+        <input type="search" class="light-table-filter" data-table="order-table" placeholder="Filtrer" />
+
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>URL Image</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Product item in ViewBag.list)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Image</td>
+                        <td>@item.Price</td>
+                        @if (item.Status == true)
+                        {
+                            <td color="Green">Being sold</td>
+                            <td><a href="/Home/AnHien?id=@item.Id&&type=0">Hide</a></td>
+
+                        }else{
+                        <td color="red">Sold out</td>
+                        <td><a href="/Home/AnHien?id=@item.Id&&type=1">Presently</a></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </br>
+        <a class="btn btn-success" href="/Home/AddProduct">Add</a>
+    </section>
+</body>
 <style>
-    charset "UTF-8";
-    import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
-
-    body {
-        font-family: 'Open Sans', sans-serif;
-        font-weight: 300;
-        line-height: 1.42em;
-        color: #A7A1AE;
-        background-color: #1F2739;
-    }
-
-    h1 {
-        font-size: 3em;
-        font-weight: 300;
-        line-height: 1em;
-        text-align: center;
-        color: #4DC3FA;
-    }
 
     h2 {
-        font-size: 1em;
-        font-weight: 300;
-        text-align: center;
-        display: block;
-        line-height: 1em;
-        padding-bottom: 2em;
-        color: #FB667A;
-    }
-
-        h2 a {
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #FB667A;
-            text-decoration: none;
-        }
-
-    .blue {
-        color: #185875;
-    }
-
-    .yellow {
-        color: #FFF842;
-    }
-
-    .container th h1 {
-        font-weight: bold;
-        font-size: 1em;
-        text-align: left;
-        color: #185875;
-    }
-
-    .container td {
-        font-weight: normal;
-        font-size: 1em;
-        -webkit-box-shadow: 0 2px 2px -2px #0E1119;
-        -moz-box-shadow: 0 2px 2px -2px #0E1119;
-        box-shadow: 0 2px 2px -2px #0E1119;
+        margin-bottom: 50px;
     }
 
     .container {
-        text-align: left;
+        text-align: center;
         overflow: hidden;
-        width: 80%;
+        width: 800px;
         margin: 0 auto;
-        display: table;
-        padding: 0 0 8em 0;
     }
+
+        .container table {
+            width: 100%;
+        }
 
         .container td, .container th {
-            padding-bottom: 2%;
-            padding-top: 2%;
-            padding-left: 2%;
+            padding: 10px;
         }
 
-        /* Background-color of the odd rows */
-        .container tr:nth-child(odd) {
-            background-color: white;
-        }
+            .container td:first-child, .container th:first-child {
+                padding-left: 20px;
+            }
 
-        /* Background-color of the even rows */
-        .container tr:nth-child(even) {
-            background-color: white;
-        }
+            .container td:last-child, .container th:last-child {
+                padding-right: 20px;
+            }
 
         .container th {
-            background-color: #53b5aa;
+            border-bottom: 1px solid #ddd;
+            position: relative;
         }
-
-        .container td:first-child {
-            color: #FB667A;
-        }
-
-        .container tr:hover {
-            background-color: white;
-            -webkit-box-shadow: 0 6px 6px -6px #0E1119;
-            -moz-box-shadow: 0 6px 6px -6px #0E1119;
-            box-shadow: 0 6px 6px -6px #0E1119;
-        }
-
-        .container td:hover {
-            background-color: #FFF842;
-            color: #403E10;
-            font-weight: bold;
-            box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
-            transform: translate3d(6px, -6px, 0);
-            transition-delay: 0s;
-            transition-duration: 0.4s;
-            transition-property: all;
-            transition-timing-function: line;
-        }
-
-    media (max-width: 800px) {
-        .container td:nth-child(4), .container th:nth-child(4)
-
-    {
-        display: none;
-    }
-
-    }
 </style>
+<script>
+        (function(document) {
+        'use strict';
+
+        var LightTableFilter = (function(Arr) {
+
+            var _input;
+
+            function _onInputEvent(e) {
+                _input = e.target;
+                var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                Arr.forEach.call(tables, function(table) {
+                    Arr.forEach.call(table.tBodies, function(tbody) {
+                        Arr.forEach.call(tbody.rows, _filter);
+                    });
+                });
+            }
+
+            function _filter(row) {
+                var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+            }
+
+            return {
+                init: function() {
+                    var inputs = document.getElementsByClassName('light-table-filter');
+                    Arr.forEach.call(inputs, function(input) {
+                        input.oninput = _onInputEvent;
+                    });
+                }
+            };
+        })(Array.prototype);
+
+        document.addEventListener('readystatechange', function() {
+            if (document.readyState === 'complete') {
+                LightTableFilter.init();
+            }
+        });
+
+    })(document);
+</script>
 </html>
