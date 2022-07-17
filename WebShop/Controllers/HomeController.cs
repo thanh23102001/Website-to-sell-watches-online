@@ -315,7 +315,31 @@ namespace WebShop.Controllers
             context.Products.Add(product);
             context.SaveChanges();
             return Redirect("ManageProduct");
+        }
+        public IActionResult FormEdit(int id)
+        {
+            using var context = new WebShopContext();
+            Product product = context.Products.Where(x => x.Id == id).SingleOrDefault();
+            ViewBag.product = product;
             return View();
+        }
+        [HttpPost]
+        public IActionResult EditProduct(int id)
+        {
+            string name = HttpContext.Request.Form["pname"];
+            string image = HttpContext.Request.Form["image"];
+            string price = HttpContext.Request.Form["price"];
+            string number = HttpContext.Request.Form["number"];
+            using var context = new WebShopContext();
+            Product product = context.Products.Where(x => x.Id == id).SingleOrDefault();
+            product.ProductName = name;
+            product.Image = image;
+            product.Number = int.Parse(number);
+            product.Price = int.Parse(price);
+            product.Status = true;
+            context.Products.Update(product);
+            context.SaveChanges();
+            return Redirect("ManageProduct");
         }
     }
 }

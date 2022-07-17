@@ -7,14 +7,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Light Javascript Table Filter</title>
     <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" rel="stylesheet">
 </head>
 <body>
     <section class="container">
-
-        <h2>Light Javascript Table Filter</h2>
-
         <input type="search" class="light-table-filter" data-table="order-table" placeholder="Filtrer" />
 
         <table class="order-table">
@@ -34,23 +30,26 @@
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.ProductName</td>
-                        <td>@item.Image</td>
+                        <td><img src="@item.Image" style="height:200px;width200px;" /></td>
                         <td>@item.Price</td>
                         @if (item.Status == true)
                         {
                             <td color="Green">Being sold</td>
-                            <td><a href="/Home/AnHien?id=@item.Id&&type=0">Hide</a></td>
+                            <td><a class="btn btn-danger" href="/Home/AnHien?id=@item.Id&&type=0">Hide</a></td>
 
-                        }else{
-                        <td color="red">Sold out</td>
-                        <td><a href="/Home/AnHien?id=@item.Id&&type=1">Presently</a></td>
                         }
+                        else
+                        {
+                            <td color="red">Sold out</td>
+                            <td><a class="btn btn-success" href="/Home/AnHien?id=@item.Id&&type=1">Presently</a></td>
+                        }
+                        <td><a class="btn btn-primary" href="/Home/FormEdit?id=@item.Id">Edit</a></td>
                     </tr>
                 }
             </tbody>
         </table>
         </br>
-        <a class="btn btn-success" href="/Home/AddProduct">Add</a>
+        <a class="btn btn-info" href="/Home/AddProduct">Add</a>
     </section>
 </body>
 <style>
