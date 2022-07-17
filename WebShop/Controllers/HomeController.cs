@@ -227,7 +227,7 @@ namespace WebShop.Controllers
 
 
 
-            public IActionResult ThanhToan(int sum)
+        public IActionResult ThanhToan(int sum)
         {
             string note = HttpContext.Request.Form["note"];
             string address = HttpContext.Request.Form["address"];
@@ -248,10 +248,10 @@ namespace WebShop.Controllers
             context.Orders.Add(order);
             context.SaveChanges();
             string cart1 = HttpContext.Session.GetString("cart");
-            IDictionary<int,int> cart = new Dictionary<int, int>();
-            cart = JsonSerializer.Deserialize<Dictionary<int,int>>(cart1);
+            IDictionary<int, int> cart = new Dictionary<int, int>();
+            cart = JsonSerializer.Deserialize<Dictionary<int, int>>(cart1);
             Order order1 = context.Orders.Where(o => o.Purchases == count).SingleOrDefault();
-            foreach(KeyValuePair<int,int> item in cart)
+            foreach (KeyValuePair<int, int> item in cart)
             {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.Idorder = order1.Id;
@@ -266,9 +266,9 @@ namespace WebShop.Controllers
             int sum1 = 0;
             foreach (KeyValuePair<int, int> item in cart)
             {
-                sum1 +=item.Value;
+                sum1 += item.Value;
             }
-            HttpContext.Session.SetString("slsp",sum1.ToString());
+            HttpContext.Session.SetString("slsp", sum1.ToString());
             return RedirectToAction("HomePage");
         }
         public IActionResult ManageProduct()
@@ -282,7 +282,7 @@ namespace WebShop.Controllers
         public IActionResult AnHien(int id, int type)
         {
             using var context = new WebShopContext();
-            Product product = context.Products.Where(x=>x.Id == id).SingleOrDefault();
+            Product product = context.Products.Where(x => x.Id == id).SingleOrDefault();
             if (type == 0)
             {
                 product.Status = false;
@@ -294,6 +294,28 @@ namespace WebShop.Controllers
             context.Products.Update(product);
             context.SaveChanges();
             return Redirect("ManageProduct");
+        }
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+        public IActionResult AddNewProduct()
+        {
+            string name = HttpContext.Request.Form["name"];
+            string image = HttpContext.Request.Form["image"];
+            string price = HttpContext.Request.Form["price"];
+            string number = HttpContext.Request.Form["number"];
+            using var context = new WebShopContext();
+            Product product = new Product();
+            product.ProductName = name;
+            product.Image = image;
+            product.Number = int.Parse(number);
+            product.Price = int.Parse(price);
+            product.Status = true;
+            context.Products.Add(product);
+            context.SaveChanges();
+            return Redirect("ManageProduct");
+            return View();
         }
     }
 }
