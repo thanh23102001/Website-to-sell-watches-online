@@ -391,6 +391,9 @@ namespace WebShop.Controllers
 
         public IActionResult ViewProfile(int id)
         {
+            using var context = new WebShopContext();
+            Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
+            ViewBag.account = account;
             return View();
         }
     }
