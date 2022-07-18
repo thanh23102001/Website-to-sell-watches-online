@@ -18,7 +18,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>User Name</th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th></th>
@@ -30,16 +29,14 @@
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.Fullname</td>
-                        <td>@item.Username</td>
                         <td>@item.Email</td>
                         <td>@item.Phone</td>
-                        <td><a class="btn btn-primary" href="/Home/FormEdit?id=@item.Id">Edit</a></td>
+                        <td><a class="btn btn-primary" href="/Home/FormEditAccount?id=@item.Id">Edit</a></td>
                     </tr>
                 }
             </tbody>
         </table>
         </br>
-        <a class="btn btn-info" href="/Home/AddProduct">Add</a>
     </section>
 </body>
 <style>

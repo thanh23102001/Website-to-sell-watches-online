@@ -365,5 +365,32 @@ namespace WebShop.Controllers
             ViewBag.list = list;
             return View();
         }
-    }
+
+        public IActionResult FormEditAccount(int id)
+        {
+            using var context = new WebShopContext();
+            Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
+            ViewBag.account = account;
+            return View();
+        }
+
+        public IActionResult EditAccount(int id)
+        {
+            string name = HttpContext.Request.Form["name"];
+            string email = HttpContext.Request.Form["email"];
+            string phone = HttpContext.Request.Form["phone"];
+            using var context = new WebShopContext();
+            Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
+            account.Fullname = name;
+            account.Email = email;
+            account.Phone = phone;
+            context.Accounts.Update(account);
+            context.SaveChanges();
+            return Redirect("ManageAccount");
+        }
+
+        public IActionResult ViewProfile(int id)
+        {
+            return View();
+        }
 }
