@@ -73,9 +73,11 @@ namespace WebShop.Controllers
             using (var context = new WebShopContext())
             {
                 account.Role = 2;
+                account.Fullname = HttpContext.Request.Form["name"];
                 account.Username = HttpContext.Request.Form["user"];
                 account.Password = HttpContext.Request.Form["pass"];
                 account.Email = HttpContext.Request.Form["email"];
+                account.Phone = HttpContext.Request.Form["phone"];
                 context.Accounts.Add(account);
                 context.SaveChanges();
             }
@@ -342,17 +344,25 @@ namespace WebShop.Controllers
             return Redirect("ManageProduct");
         }
 
-        public IActionResult ManageOrder(int id)
+        public IActionResult ManageOrder()
         {
             using (var context = new WebShopContext())
             {
                 List<Order> list = context.Orders.ToList();
-                foreach(Order item in list)
+                foreach (Order item in list)
                 {
                     item.CustomerNavigation = context.Accounts.Where(x => x.Id == item.Customer).Single();
                 }
                 ViewBag.list = list;
             }
+            return View();
+        }
+
+        public IActionResult ManageAccount()
+        {
+            using var context = new WebShopContext();
+            List<Account> list = context.Accounts.ToList();
+            ViewBag.list = list;
             return View();
         }
     }
