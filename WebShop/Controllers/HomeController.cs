@@ -396,5 +396,32 @@ namespace WebShop.Controllers
             ViewBag.account = account;
             return View();
         }
+
+        public IActionResult FormEditProfile(int id)
+        {
+            using var context = new WebShopContext();
+            Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
+            ViewBag.account = account;
+            return View();
+        }
+
+        public IActionResult EditProfile(int id)
+        {
+            string name = HttpContext.Request.Form["name"];
+            string email = HttpContext.Request.Form["email"];
+            string phone = HttpContext.Request.Form["phone"];
+            string pass = HttpContext.Request.Form["pass"];
+            string user = HttpContext.Request.Form["user"];
+            using var context = new WebShopContext();
+            Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
+            account.Fullname = name;
+            account.Email = email;
+            account.Phone = phone;
+            account.Password = pass;
+            account.Username = user;
+            context.Accounts.Update(account);
+            context.SaveChanges();
+            return Redirect("ViewProfile");
+        }
     }
 }
