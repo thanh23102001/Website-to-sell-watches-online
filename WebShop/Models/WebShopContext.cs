@@ -53,6 +53,14 @@ namespace WebShop.Models
                 entity.Property(e => e.Username)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Fullname)
+                   .HasMaxLength(50)
+                   .IsUnicode(false);
+
+                entity.Property(e => e.Phone)
+                   .HasMaxLength(50)
+                   .IsUnicode(false);
             });
 
             modelBuilder.Entity<Order>(entity =>

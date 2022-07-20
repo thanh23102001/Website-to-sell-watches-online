@@ -404,24 +404,22 @@ namespace WebShop.Controllers
             ViewBag.account = account;
             return View();
         }
-
+        [HttpPost]
         public IActionResult EditProfile(int id)
         {
-            string name = HttpContext.Request.Form["name"];
+            string name = HttpContext.Request.Form["fname"];
             string email = HttpContext.Request.Form["email"];
-            string phone = HttpContext.Request.Form["phone"];
-            string pass = HttpContext.Request.Form["pass"];
+            string phone = HttpContext.Request.Form["phone"]; 
             string user = HttpContext.Request.Form["user"];
             using var context = new WebShopContext();
             Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
             account.Fullname = name;
             account.Email = email;
             account.Phone = phone;
-            account.Password = pass;
             account.Username = user;
             context.Accounts.Update(account);
             context.SaveChanges();
-            return Redirect("ViewProfile");
+            return Redirect("ViewProfile?id=" + id);
         }
     }
 }
