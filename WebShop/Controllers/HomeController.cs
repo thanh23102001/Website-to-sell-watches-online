@@ -409,7 +409,7 @@ namespace WebShop.Controllers
         {
             string name = HttpContext.Request.Form["fname"];
             string email = HttpContext.Request.Form["email"];
-            string phone = HttpContext.Request.Form["phone"]; 
+            string phone = HttpContext.Request.Form["phone"];
             string user = HttpContext.Request.Form["user"];
             using var context = new WebShopContext();
             Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
@@ -420,6 +420,46 @@ namespace WebShop.Controllers
             context.Accounts.Update(account);
             context.SaveChanges();
             return Redirect("ViewProfile?id=" + id);
+        }
+
+        public IActionResult FormEditPassword(int id, string message)
+        {
+            using var context = new WebShopContext();
+            Account account = context.Accounts.Where(x => x.Id == id).SingleOrDefault();
+            ViewBag.account = account;
+            ViewBag.message = message;
+            return View();
+        }
+        public IActionResult EditPassword(int id)
+        {
+            string oldpassword = HttpContext.Request.Form["oldpass"];
+            string newpassword = HttpContext.Request.Form["newpass"];
+            string cnewpassword = HttpContext.Request.Form["cnewpass"];
+            using var context = new WebShopContext();
+            Account account = context.Accounts.Where(x => x.Id == id && x.Password == oldpassword).SingleOrDefault();
+            string message;
+            if (account == null)
+            {
+                message = "Mat khau khong dung";
+                ViewBag.message = message;
+            }
+            else
+            {
+                if (newpassword.Equals(cnewpassword))
+                {
+                    account.Password = newpassword;
+                    context.Accounts.Update(account);
+                    context.SaveChanges();
+                    message = "Thay doi mat khau tahnh cong";
+                    ViewBag.message = message;
+                }
+                else
+                {
+                    message = "nhap lai cf password";
+                    ViewBag.message = message;
+                }
+            }
+            return Redirect("FormEditPassWord?id=" + id+"&message="+message);
         }
     }
 }
