@@ -12,12 +12,12 @@
 <html>
 <header id="site-header">
     <div class="container">
-        <a href="/Product/List"><h1>Back to shop</h1></a>
+        <a href="/Home/Homepage"><h1>Back to shop</h1></a>
     </div>
 </header>
 @if (@ViewBag.number == null)
 {
-    <div>Cart is empty</div>
+    <h2 style="color:red">Cart is empty</h2>
 }
 else
 {
@@ -34,7 +34,7 @@ else
                 <article class="product">
                     <header>
                         <a class="remove" href="/Product/XoaHetSP?id1=@product.Id">
-                            <img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/1.jpg" alt="">
+                            <img src="@product.Image" alt="">
                             <h3>Remove product</h3>
                         </a>
                     </header>

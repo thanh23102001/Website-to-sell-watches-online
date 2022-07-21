@@ -450,7 +450,7 @@ namespace WebShop.Controllers
                     account.Password = newpassword;
                     context.Accounts.Update(account);
                     context.SaveChanges();
-                    message = "Thay doi mat khau tahnh cong";
+                    message = "Thay doi mat khau thanh cong";
                     ViewBag.message = message;
                 }
                 else
@@ -461,5 +461,10 @@ namespace WebShop.Controllers
             }
             return Redirect("FormEditPassWord?id=" + id+"&message="+message);
         }
-    }
+        public IActionResult ViewOrder(int id)
+        {
+            return View();
+        }
+        
+        }
 }
