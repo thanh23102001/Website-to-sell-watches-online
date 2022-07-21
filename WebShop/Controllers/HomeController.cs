@@ -361,7 +361,7 @@ namespace WebShop.Controllers
         public IActionResult ManageAccount()
         {
             using var context = new WebShopContext();
-            List<Account> list = context.Accounts.ToList();
+            List<Account> list = context.Accounts.Where(x => x.Role == 2).ToList();
             ViewBag.list = list;
             return View();
         }
@@ -459,12 +459,18 @@ namespace WebShop.Controllers
                     ViewBag.message = message;
                 }
             }
-            return Redirect("FormEditPassWord?id=" + id+"&message="+message);
+            return Redirect("FormEditPassWord?id=" + id + "&message=" + message);
         }
         public IActionResult ViewOrder(int id)
         {
+
+            using (var context = new WebShopContext())
+            {
+                List<Order> list = context.Orders.Where(x => x.Customer == id).ToList();
+                ViewBag.list = list;
+            }
             return View();
         }
-        
-        }
+
+    }
 }

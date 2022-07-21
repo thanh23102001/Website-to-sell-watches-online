@@ -39,7 +39,7 @@
                     }
                     foreach (OrderDetail item1 in list)
                     {
-                        text += item1.ProductNavigation.ProductName + "Number: " + item1.Number + "---";
+                        text += item1.ProductNavigation.ProductName + " Số lượng: " + item1.Number + "  ";
                     }
                     <tr>
                         <td>@item.Purchases</td>
@@ -52,7 +52,6 @@
             </tbody>
         </table>
         </br>
-        <a class="btn btn-info" href="/Home/AddProduct">Add</a>
     </section>
 </body>
 <style>
