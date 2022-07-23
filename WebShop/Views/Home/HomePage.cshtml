@@ -14,10 +14,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
     <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <style>
         body, h1, h2, h3, h4, h5, h6 {
             font-family: "Karma", sans-serif
@@ -62,7 +60,17 @@
             else
             {
                 <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-                <div class="w3-right w3-padding-16"><a href="/Home/ViewCart" style="text-decoration:none"  onclick="w3_close()" class="w3-bar-item w3-button">View Cart(@ViewBag.slsp)</a></div>
+                if (ViewBag.role == "2")
+                {
+                    <div class="w3-right w3-padding-16"><a href="/Home/ViewCart" style="text-decoration:none" onclick="w3_close()" class="w3-bar-item w3-button">View Cart(@ViewBag.slsp)</a></div>
+                }
+                else
+                {
+                    <div style="color:blue" class="w3-right w3-padding-16">
+                        Hello admin !
+                    </div>
+                }
+
             }
             <div class="w3-center w3-padding-16">Time is gold</div>
         </div>
@@ -71,14 +79,17 @@
     <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
         <div class="w3-center w3-padding-32">
             <div class="w3-bar">
-                <table width="1200px"  id="home">
+                <table width="1200px" id="home">
                     <thead>
                         <tr>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Price</th>
                             <th>Number</th>
-                            <th></th>
+                            @if (ViewBag.role == "2")
+                            {
+                                <th></th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -89,7 +100,10 @@
                                 <td>@item.ProductName</td>
                                 <td>@item.Price</td>
                                 <td>@item.Number</td>
-                                <td><a href="/Home/AddToCart?id=@item.Id" class="btn btn-primary">Add cart</a></td>
+                                @if (ViewBag.role == "2")
+                                {
+                                    <td><a href="/Home/AddToCart?id=@item.Id" class="btn btn-primary">Add cart</a></td>
+                                }
                             </tr>
                         }
                     </tbody>
@@ -107,61 +121,65 @@
                 <h4><b>I am Who I Am!</b></h4>
                 <h6><i>With Passion For Real, Good Watch</i></h6>
                 <p>The question that comes to my mind every day is: Am I doing the most important thing I can do? Unless I feel like I'm dealing with the most important thing I can help, I'll feel uncomfortable with how I spend my time.</p>
+            </div>
+            <hr>
+
+            <!-- Footer -->
+            <footer class="w3-row-padding w3-padding-32">
+                <div class="w3-third">
+                    <h3>FOOTER</h3>
+                    <p>We need to go sideways with time, not let time pass by.</p>
+                </div>
+
+                <div class="w3-third">
+                    <h3>POSTS</h3>
+                    <ul class="w3-ul w3-hoverable">
+                        <li class="w3-padding-16">
+                            <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+                            <span class="w3-large">Lorem</span><br>
+                            <span>Sed mattis nunc</span>
+                        </li>
+                        <li class="w3-padding-16">
+                            <img src="/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
+                            <span class="w3-large">Ipsum</span><br>
+                            <span>Praes tinci sed</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="w3-third w3-serif">
+                    <h3>POPULAR TAGS</h3>
+                    <p>
+                        <span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dinner</span>
+                        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Salmon</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">France</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Drinks</span>
+                        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Flavors</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Cuisine</span>
+                        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Chicken</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dressing</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fried</span>
+                        <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fish</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Duck</span>
+                    </p>
+                </div>
+            </footer>
+
         </div>
-        <hr>
 
-        <!-- Footer -->
-        <footer class="w3-row-padding w3-padding-32">
-            <div class="w3-third">
-                <h3>FOOTER</h3>
-                <p>We need to go sideways with time, not let time pass by.</p>
-            </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
-            <div class="w3-third">
-                <h3>POSTS</h3>
-                <ul class="w3-ul w3-hoverable">
-                    <li class="w3-padding-16">
-                        <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
-                        <span class="w3-large">Lorem</span><br>
-                        <span>Sed mattis nunc</span>
-                    </li>
-                    <li class="w3-padding-16">
-                        <img src="/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
-                        <span class="w3-large">Ipsum</span><br>
-                        <span>Praes tinci sed</span>
-                    </li>
-                </ul>
-            </div>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
-            <div class="w3-third w3-serif">
-                <h3>POPULAR TAGS</h3>
-                <p>
-                    <span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dinner</span>
-                    <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Salmon</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">France</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Drinks</span>
-                    <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Flavors</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Cuisine</span>
-                    <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Chicken</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dressing</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fried</span>
-                    <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fish</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Duck</span>
-                </p>
-            </div>
-        </footer>
 
-        <!-- End page content -->
-    </div>
+        <script>
 
-    <script>
-                // Script to open and close sidebar
-                function w3_open() {
-                  document.getElementById("mySidebar").style.display = "block";
-                }
+                    function w3_open() {
+                      document.getElementById("mySidebar").style.display = "block";
+                    }
 
-                function w3_close() {
-                  document.getElementById("mySidebar").style.display = "none";
-                }
+                    function w3_close() {
+                      document.getElementById("mySidebar").style.display = "none";
+                    }
 
-                $(document).ready( function () {
-            $('#home').DataTable();
-        } );
-    </script>
+                    $(document).ready( function () {
+                $('#home').DataTable();
+            } );
+        </script>
 
 </body>
 </html>

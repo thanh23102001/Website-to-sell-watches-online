@@ -77,19 +77,18 @@
     </style>
 </head>
 <body>
-
-    <h2>Edit product</h2>
-    <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
-
+    <h2>Edit Profile</h2>
+    <p color="red">Enter the full information before edit</p>
     <div class="container">
+       <a href="/Home/ViewProfile?id=@ViewBag.account.Id" style="text-decoration:none"><h1>Back to view profile</h1></a>
         <form action="/Home/EditProfile?id=@ViewBag.account.Id" method="post">
             <div class="row">
                 <div class="col-25">
                     <label for="funame">Name</label>
                 </div>
                 <div class="col-75">
-                        <input type="text"  name="fname" value="@ViewBag.account.Fullname">
-                    </div>
+                    <input type="text" name="fname" value="@ViewBag.account.Fullname">
+                </div>
             </div>
             <div class="row">
                 <div class="col-25">
@@ -107,17 +106,17 @@
                     <input type="text" id="lname" name="phone" value="@ViewBag.account.Phone">
                 </div>
             </div>
-             <div class="row">
+            <div class="row">
                 <div class="col-25">
                     <label for="lname">Username</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="lname" name="user" value="@ViewBag.account.Username">
                 </div>
-            <br>
-            <div class="row">
-                <input type="submit" value="Edit">
-            </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Edit">
+                </div>
         </form>
     </div>
 

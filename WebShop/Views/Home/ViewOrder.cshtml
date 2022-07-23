@@ -11,6 +11,11 @@
     <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" rel="stylesheet">
 </head>
 <body>
+    <header id="site-header">
+        <div class="container">
+            <a href="/Home/Homepage"><h1>Back to shop</h1></a>
+        </div>
+    </header>
     <section class="container">
         <input type="search" class="light-table-filter" data-table="order-table" placeholder="Filtrer" />
 
@@ -38,7 +43,7 @@
                     }
                     foreach (OrderDetail item1 in list)
                     {
-                        text += item1.ProductNavigation.ProductName + "Number: " + item1.Number + "---";
+                        text += item1.ProductNavigation.ProductName + "Number: " + item1.Number + "   ";
                     }
                     <tr>
                         <td>@item.Purchases</td>

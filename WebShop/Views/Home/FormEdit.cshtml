@@ -79,8 +79,10 @@
 <body>
 
     <h2>Edit product</h2>
-    <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
-
+    <p>Enter the full information before edit</p>
+      <div class="container">
+            <a href="/Home/ManageProduct"><h1>Back to shop</h1></a>
+        </div>
     <div class="container">
         <form action="/Home/EditProduct?id=@ViewBag.product.Id" method="post">
             <div class="row">

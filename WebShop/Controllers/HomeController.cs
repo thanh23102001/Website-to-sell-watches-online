@@ -455,7 +455,7 @@ namespace WebShop.Controllers
                 }
                 else
                 {
-                    message = "nhap lai cf password";
+                    message = "Nhap lai confirm new password";
                     ViewBag.message = message;
                 }
             }
